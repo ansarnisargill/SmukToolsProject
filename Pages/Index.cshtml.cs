@@ -20,6 +20,7 @@ namespace SmukToolsApp.Pages
         public IndexModel(SmukContext contex)
         {
             _context=contex;
+            Initializedb();
         }
          private void Initializedb()
         {
