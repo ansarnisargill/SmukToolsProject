@@ -37,8 +37,8 @@ namespace SmukToolsApp.Pages
                 {
                     ProjectId = _context.Projects.First().id,
                     title = "Test Event",
-                    StartDate = DateTime.Now.AddDays(-7),
-                    EndDate = DateTime.Now
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.AddDays(3)
                 });
                 _context.SaveChanges();
             }

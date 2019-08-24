@@ -18,6 +18,8 @@ namespace SmukToolsApp.Pages
         public string Resources { get; set; }
         [BindProperty]
         public string Events { get; set; }
+        [BindProperty]
+        public int DaysInMonth { get; set; }=DateTime.DaysInMonth(DateTime.Now.Year,DateTime.Now.Month);
         public void OnGet()
         {
             var listOfProjects = _context.Projects.ToList();
