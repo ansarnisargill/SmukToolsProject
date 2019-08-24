@@ -1,0 +1,42 @@
+@page
+@model SmukToolsApp.Pages.Projects.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Projects</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-outline-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Project Title
+            </th>
+            <th>
+                Complete Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Project) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.iscomplete)
+            </td>
+            <td>
+                <a asp-page="./Edit" class="btn-sm btn-outline-primary" asp-route-id="@item.id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.id" class="btn-sm btn-outline-dark">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.id" class="btn-sm btn-outline-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

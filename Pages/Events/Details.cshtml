@@ -1,0 +1,43 @@
+@page
+@model SmukToolsApp.Pages.Events.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Event</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Event.Project)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Event.Project.title)
+        </dd>
+        <dt class="col-sm-2">
+            Event Title
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Event.title)
+        </dd>
+        <dt class="col-sm-2">
+            Start Date
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Event.StartDate)
+        </dd>
+        <dt class="col-sm-2">
+            End Date
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Event.EndDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" class="btn-sm btn-outline-dark" asp-route-id="@Model.Event.id">Edit</a> |
+    <a asp-page="./Index" class="btn-sm btn-outline-primary">Back to List</a>
+</div>

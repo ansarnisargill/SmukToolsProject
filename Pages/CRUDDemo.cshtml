@@ -1,0 +1,56 @@
+﻿@page
+@model CRUDDemoModel
+@{
+    ViewData["Title"] = "Home page";
+}
+ <div id='crudcalendar'>
+     
+ </div>
+<script>
+    // Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+// for details on configuring this project to bundle and minify static web assets.
+
+// Write your Javascript code.
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('crudcalendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'resourceTimeline' ],
+      now:  '@DateTime.Now.ToString("yyyy-MM-dd")' ,
+      editable: true,
+      aspectRatio: 1.8,
+      scrollTime: '00:00',
+      header: {
+        left: 'today prev,next',
+        center: 'title',
+        right: 'resourceTimelineDay,resourceTimelineThreeMonths,timeGridWeek,dayGridMonth'
+      },
+      //defaultView: 'resourceTimelineDay',
+      defaultView: 'resourceTimelineThreeMonths',
+      views: {
+        resourceTimelineThreeMonths: {
+          type: 'resourceTimeline',
+          duration: { days: 90 },
+          buttonText: '3 Months'
+        }
+      },
+      resourceAreaWidth: '30%',
+      resourceColumns: [
+        {
+          labelText: 'Project',
+          field: 'title'
+        },
+        {
+          labelText: 'Status',
+          field: 'status'
+        }
+      ],
+      resources: 
+      @Html.Raw(Model.Resources),
+      events:@Html.Raw(Model.Events)
+    });
+
+    calendar.render();
+  });
+</script>
