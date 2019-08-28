@@ -11,6 +11,8 @@ using SmukToolsProject.Models;
 
 namespace SmukToolsApp.Pages.Projects
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
     public class EditModel : PageModel
     {
         private readonly SmukToolsApp.Models.SmukContext _context;

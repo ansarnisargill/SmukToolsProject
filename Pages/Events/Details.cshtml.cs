@@ -10,6 +10,8 @@ using SmukToolsProject.Models;
 
 namespace SmukToolsApp.Pages.Events
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
     public class DetailsModel : PageModel
     {
         private readonly SmukToolsApp.Models.SmukContext _context;

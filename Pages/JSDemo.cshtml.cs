@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace SmukToolsApp.Pages
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
     public class JSDemoModel : PageModel
     {
         public void OnGet()

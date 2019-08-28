@@ -11,6 +11,8 @@ using SmukToolsProject.Models.DTO;
 
 namespace SmukToolsApp.Pages
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
+
     public class CRUDDemoModel : PageModel
     {
         private SmukContext _context;

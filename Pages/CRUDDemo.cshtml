@@ -3,9 +3,28 @@
 @{
     ViewData["Title"] = "Home page";
 }
- <div id='crudcalendar' class="">
-     
- </div>
+<div id='crudcalendar' class="">
+
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modelBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     // Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
@@ -16,7 +35,18 @@
     var calendarEl = document.getElementById('crudcalendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'resourceTimeline' ],
+        plugins: ['interaction', 'dayGrid', 'timeGrid', 'resourceTimeline'],
+
+              eventClick: function test(info) {
+                          $('#exampleModalLabel').empty();
+                  $('#exampleModalLabel').append(`${info.event.title}`);
+
+
+                  let buttons = `<div class="btn-group" role="group"><button class="btn btn-lg btn-outline-dark" onclick="GoToEdit('${info.event.id}')" >Edit</button><button class="btn btn-lg btn-outline-primary" onclick="GoToDetails('${info.event.id}')" >Details</button></div>`;
+                                  $('#modelBody').empty();
+                $('#modelBody').append(buttons);
+                $('#exampleModal').modal();
+      },
       now:  '@DateTime.Now.ToString("yyyy-MM-dd")' ,
       editable: true,
       aspectRatio: window.devicePixelRatio,
@@ -46,11 +76,13 @@
           field: 'status'
         }
       ],
-      resources: 
+      resources:
       @Html.Raw(Model.Resources),
       events:@Html.Raw(Model.Events)
     });
 calendar.setOption('height', window.innerHeight-100);
-    calendar.render();
+
+      calendar.render();
   });
+
 </script>
