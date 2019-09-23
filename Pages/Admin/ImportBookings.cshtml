@@ -1,0 +1,34 @@
+﻿@page
+@model SmukToolsApp.Pages.Admin.ImportBookingsModel
+@{
+    ViewData["Title"] = "ImportBookings";
+}
+
+<h1>ImportBookings</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data" asp-controller="Admin" asp-action="ImportShifts">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                Project
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Importer" class="btn btn-primary" />
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <p>Upload one or more files using this form:</p>
+                    <p>NOTE: File MUST be unicoded.</p>
+                    <input type="file" name="files" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

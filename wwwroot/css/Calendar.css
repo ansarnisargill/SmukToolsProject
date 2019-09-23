@@ -1,0 +1,61 @@
+﻿
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.fixed-table-toolbar .bars
+{
+    position: inherit;
+    line-height: 20px;
+    
+}
+
+.fixed-table-toolbar .search
+{
+    margin-bottom: 0 !important;
+    margin-top: 35px;
+}
+
+.fc-cell-text {
+    font-size: 14px;
+}
+
+li.selected {
+    background-image: linear-gradient(to bottom, #e8e8e8, #d5d5d5);
+}
+
+.dropdown-menu > li.selected > a:focus,
+.dropdown-menu > li.selected > a:hover {
+    background-image: linear-gradient(to bottom, #d5d5d5, #c3c3c3);
+}
+
+span.vendorColor {
+    display: inline-block;
+    height: 0.75em;
+    width: 1.5em;
+    margin-right: 0.5em;
+    border-radius: 2px;
+}
+
+@media (min-width: 767px) {
+    .navbar-nav .dropdown-menu .caret {
+        transform: rotate(-90deg);
+    }
+}

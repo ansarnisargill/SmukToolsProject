@@ -224,8 +224,8 @@ document.addEventListener('DOMContentLoaded', function () {
   calendar.render();
 });
 function GoToEdit(id) {
-    window.location.href = `/Events/Edit?id=${id}`;
+    window.location.href = `/Bookings/Edit?id=${id}`;
 }
 function GoToDetails(id) {
-    window.location.href = `/Events/Details?id=${id}`;
+    window.location.href = `/Bookings/Details?id=${id}`;
 }

@@ -1,32 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\it\\Desktop\\SmukToolsProject\\SmukToolsApp.csproj": {}
+    "C:\\Users\\Ansar\\Downloads\\SmukToolsProject\\SmukToolsApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\it\\Desktop\\SmukToolsProject\\SmukToolsApp.csproj": {
+    "C:\\Users\\Ansar\\Downloads\\SmukToolsProject\\SmukToolsApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\it\\Desktop\\SmukToolsProject\\SmukToolsApp.csproj",
+        "projectUniqueName": "C:\\Users\\Ansar\\Downloads\\SmukToolsProject\\SmukToolsApp.csproj",
         "projectName": "SmukToolsApp",
-        "projectPath": "C:\\Users\\it\\Desktop\\SmukToolsProject\\SmukToolsApp.csproj",
-        "packagesPath": "C:\\Users\\it\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\it\\Desktop\\SmukToolsProject\\obj\\",
+        "projectPath": "C:\\Users\\Ansar\\Downloads\\SmukToolsProject\\SmukToolsApp.csproj",
+        "packagesPath": "C:\\Users\\Ansar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ansar\\Downloads\\SmukToolsProject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\it\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Ansar\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.2"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,6 +39,10 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[12.1.2, )"
+            },
             "Microsoft.AspNetCore.App": {
               "suppressParent": "All",
               "target": "Package",
@@ -67,6 +67,10 @@
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
+            },
+            "Microsoft.VisualBasic": {
+              "target": "Package",
+              "version": "[10.3.0, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",

@@ -1,0 +1,54 @@
+﻿@page
+@model SmukToolsApp.Pages.ToolTypes.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ToolType</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ToolType.Code" class="control-label"></label>
+                <input asp-for="ToolType.Code" class="form-control" />
+                <span asp-validation-for="ToolType.Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToolType.Titel" class="control-label"></label>
+                <input asp-for="ToolType.Titel" class="form-control" />
+                <span asp-validation-for="ToolType.Titel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToolType.Price" class="control-label"></label>
+                <input asp-for="ToolType.Price" class="form-control" />
+                <span asp-validation-for="ToolType.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToolType.PriceDuration" class="control-label"></label>
+                <select asp-for="ToolType.PriceDuration" class="form-control"></select>
+                <span asp-validation-for="ToolType.PriceDuration" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ToolType.RequiresApproval" /> @Html.DisplayNameFor(model => model.ToolType.RequiresApproval))
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

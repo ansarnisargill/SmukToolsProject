@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SmukToolsApp.Data;
 using SmukToolsApp.Models;
 
 namespace SmukToolsApp
@@ -32,9 +33,11 @@ namespace SmukToolsApp
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            // services.AddDbContext<FoodContext>(options =>
-            //        options.UseSqlite(Configuration.GetConnectionString("PunjabDatabase")));
-            services.AddDbContext<SmukContext>(options => options.UseInMemoryDatabase("Data"));
+
+            services.AddDbContext<ToolContext>(options =>
+                // options.UseSqlServer(
+                //     Configuration.GetConnectionString("SmukToolsAppContextConnection")));
+                options.UseInMemoryDatabase("MainDB"));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

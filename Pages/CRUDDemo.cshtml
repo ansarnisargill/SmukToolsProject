@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = "Home page";
 }
+
+
+<link href="~/css/Calendar.css" rel="stylesheet" type="text/css" />
 <div id='crudcalendar' class="">
 
 </div>
@@ -25,6 +28,67 @@
         </div>
     </div>
 </div>
+
+
+<div id="myModalSave" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Save Event</h4>
+            </div>
+            <div class="modal-body">
+                <form class="col-md-12 form-horizontal">
+                    <input type="hidden" id="hdEventID" value="0" />
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" id="txtSubject" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Start</label>
+                        <div class="input-group date" id="dtp1">
+                            <input type="text" id="txtStart" class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="chkIsFullDay" checked="checked" />  Is Full Day event</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="divEndDate" style="display:none">
+                        <label>End</label>
+                        <div class="input-group date" id="dtp2">
+                            <input type="text" id="txtEnd" class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="txtDescription" rows="3" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Theme Color</label>
+                        <select id="ddThemeColor" class="form-control">
+                            <option value="">Default</option>
+                            <option value="red">Red</option>
+                            <option value="blue">Blue</option>
+                            <option value="black">Black</option>
+                            <option value="green">Green</option>
+                        </select>
+                    </div>
+                    <button type="button" id="btnSave" class="btn btn-success">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     // Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
@@ -38,37 +102,55 @@
         plugins: ['interaction', 'dayGrid', 'timeGrid', 'resourceTimeline'],
 
               eventClick: function test(info) {
+                $('#myModalSave').modal();
+
+        },
+              eventDrop: function test(info) {
                           $('#exampleModalLabel').empty();
-                  $('#exampleModalLabel').append(`${info.event.title}`);
+                  $('#exampleModalLabel').append(`DROPE`);
 
 
                   let buttons = `<div class="btn-group" role="group"><button class="btn btn-lg btn-outline-dark" onclick="GoToEdit('${info.event.id}')" >Edit</button><button class="btn btn-lg btn-outline-primary" onclick="GoToDetails('${info.event.id}')" >Details</button></div>`;
                                   $('#modelBody').empty();
                 $('#modelBody').append(buttons);
-                $('#exampleModal').modal();
-      },
-      now:  '@DateTime.Now.ToString("yyyy-MM-dd")' ,
-      editable: true,
-      aspectRatio: window.devicePixelRatio,
-      scrollTime: '00:00',
-      header: {
+                  $('#exampleModal').modal();
+
+        },
+        now:  '@DateTime.Now.ToString("yyyy-MM-dd")' ,
+        editable: true,
+        //now: $nowDate,
+        locale: "da-DK",
+        nowIndicator: true,
+        aspectRatio: 1.2,
+        //height: 300,
+        navLinks: true,
+        displayEventTime: false,
+        scrollTime: '00:00',
+        firstDay: 1, //monday
+        weekNumbers: true,
+        header: {
         left: 'today prev,next',
         center: 'title',
-        right: 'resourceTimelineDay,resourceTimelineThisMonths,timeGridWeek'
-      },
-      //defaultView: 'resourceTimelineDay',
-      defaultView: 'resourceTimelineThisMonths',
-      views: {
-        resourceTimelineThisMonths: {
-          type: 'resourceTimeline',
-          duration: { days: @Model.DaysInMonth },
-          buttonText: 'Month'
-        }
-      },
-      resourceAreaWidth: '30%',
+        right: 'timelinePeriod,resourceTimelineDay,resourceTimelineThisMonths,timeGridWeek'
+        },
+        //defaultView: 'resourceTimelineDay',
+        defaultView: 'resourceTimelineThisMonths',
+        views: {
+            resourceTimelineThisMonths: {
+                type: 'resourceTimeline',
+                duration: { days: @Model.DaysInMonth },
+                buttonText: 'Month'
+            },
+            timelinePeriod: {
+                type: "timeline",
+                buttonText: "periode",
+                slotLabelFormat: ["MMMM", "D", "dd"],
+            }
+        },
+      resourceAreaWidth: '15%',
       resourceColumns: [
         {
-          labelText: 'Project',
+          labelText: 'Tool',
           field: 'title'
         },
         {
@@ -78,11 +160,46 @@
       ],
       resources:
       @Html.Raw(Model.Resources),
-      events:@Html.Raw(Model.Events)
+      events:@Html.Raw(Model.Bookings)
     });
 calendar.setOption('height', window.innerHeight-100);
 
       calendar.render();
   });
-
+    
+            $('#btnSave').click(function () {
+                //Validation/
+                if ($('#txtSubject').val().trim() == "") {
+                    alert('Subject required');
+                    return;
+                }
+                if ($('#txtStart').val().trim() == "") {
+                    alert('Start date required');
+                    return;
+                }
+                if ($('#chkIsFullDay').is(':checked') == false && $('#txtEnd').val().trim() == "") {
+                    alert('End date required');
+                    return;
+                }
+                else {
+                    var startDate = moment($('#txtStart').val(), "DD/MM/YYYY HH:mm A").toDate();
+                    var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm A").toDate();
+                    if (startDate > endDate) {
+                        alert('Invalid end date');
+                        return;
+                    }
+                }
+            
+                var data = {
+                    EventID: $('#hdEventID').val(),
+                    Subject: $('#txtSubject').val().trim(),
+                    Start: $('#txtStart').val().trim(),
+                    End: $('#chkIsFullDay').is(':checked') ? null : $('#txtEnd').val().trim(),
+                    Description: $('#txtDescription').val(),
+                    ThemeColor: $('#ddThemeColor').val(),
+                    IsFullDay: $('#chkIsFullDay').is(':checked')
+                }
+                SaveEvent(data);
+                // call function for submit data to the server 
+            })
 </script>
