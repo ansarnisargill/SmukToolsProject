@@ -61,5 +61,27 @@ namespace SmukToolsApp
         public void Delete(int id)
         {
         }
+[HttpGet("/EditTool")]
+        public IActionResult SaveEditedTool(int id, string start, string end)
+        {
+            try
+            {
+                var booking = Context.Bookings.FirstOrDefault(x=>x.Id==id);
+                if (booking == null)
+                {
+                    return BadRequest();
+                }
+                booking.StartDate=DateTime.Parse(start);
+                booking.EndDate=DateTime.Parse(end);
+                Context.Entry(booking).State=Microsoft.EntityFrameworkCore.EntityState.Modified;
+                Context.SaveChanges();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
     }
 }

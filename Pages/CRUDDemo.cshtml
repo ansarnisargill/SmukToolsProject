@@ -1,7 +1,7 @@
 ﻿@page
 @model CRUDDemoModel
 @{
-    ViewData["Title"] = "Home page";
+ViewData["Title"] = "Home page";
 }
 
 
@@ -11,7 +11,7 @@
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -55,7 +55,8 @@
                     </div>
                     <div class="form-group">
                         <div class="checkbox">
-                            <label><input type="checkbox" id="chkIsFullDay" checked="checked" />  Is Full Day event</label>
+                            <label><input type="checkbox" id="chkIsFullDay" checked="checked" /> Is Full Day
+                                event</label>
                         </div>
                     </div>
                     <div class="form-group" id="divEndDate" style="display:none">
@@ -91,115 +92,123 @@
 
 <script>
     // Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+    // for details on configuring this project to bundle and minify static web assets.
 
-// Write your Javascript code.
+    // Write your Javascript code.
 
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('crudcalendar');
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('crudcalendar');
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: ['interaction', 'dayGrid', 'timeGrid', 'resourceTimeline'],
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: ['interaction', 'dayGrid', 'timeGrid', 'resourceTimeline'],
 
-              eventClick: function test(info) {
+            eventClick: function test(info) {
                 $('#myModalSave').modal();
 
-        },
-              eventDrop: function test(info) {
-                          $('#exampleModalLabel').empty();
-                  $('#exampleModalLabel').append(`DROPE`);
-
-
-                  let buttons = `<div class="btn-group" role="group"><button class="btn btn-lg btn-outline-dark" onclick="GoToEdit('${info.event.id}')" >Edit</button><button class="btn btn-lg btn-outline-primary" onclick="GoToDetails('${info.event.id}')" >Details</button></div>`;
-                                  $('#modelBody').empty();
-                $('#modelBody').append(buttons);
-                  $('#exampleModal').modal();
-
-        },
-        now:  '@DateTime.Now.ToString("yyyy-MM-dd")' ,
-        editable: true,
-        //now: $nowDate,
-        locale: "da-DK",
-        nowIndicator: true,
-        aspectRatio: 1.2,
-        //height: 300,
-        navLinks: true,
-        displayEventTime: false,
-        scrollTime: '00:00',
-        firstDay: 1, //monday
-        weekNumbers: true,
-        header: {
-        left: 'today prev,next',
-        center: 'title',
-        right: 'timelinePeriod,resourceTimelineDay,resourceTimelineThisMonths,timeGridWeek'
-        },
-        //defaultView: 'resourceTimelineDay',
-        defaultView: 'resourceTimelineThisMonths',
-        views: {
-            resourceTimelineThisMonths: {
-                type: 'resourceTimeline',
-                duration: { days: @Model.DaysInMonth },
-                buttonText: 'Month'
             },
-            timelinePeriod: {
-                type: "timeline",
-                buttonText: "periode",
-                slotLabelFormat: ["MMMM", "D", "dd"],
-            }
-        },
-      resourceAreaWidth: '15%',
-      resourceColumns: [
-        {
-          labelText: 'Tool',
-          field: 'title'
-        },
-        {
-          labelText: 'Status',
-          field: 'status'
-        }
-      ],
-      resources:
-      @Html.Raw(Model.Resources),
-      events:@Html.Raw(Model.Bookings)
-    });
-calendar.setOption('height', window.innerHeight-100);
+            eventDrop: function test(info) {
+                $('#exampleModalLabel').empty();
+                $('#exampleModalLabel').append(`DROPE`);
 
-      calendar.render();
-  });
-    
-            $('#btnSave').click(function () {
-                //Validation/
-                if ($('#txtSubject').val().trim() == "") {
-                    alert('Subject required');
-                    return;
+
+                let buttons =
+                    `<div class="btn-group" role="group"><button class="btn btn-lg btn-outline-dark" onclick="GoToEdit('${info.event.id}')" >Edit</button><button class="btn btn-lg btn-outline-primary" onclick="GoToDetails('${info.event.id}')" >Details</button></div>`;
+                $('#modelBody').empty();
+                $('#modelBody').append(buttons);
+                $('#exampleModal').modal();
+
+            },
+            now: '@DateTime.Now.ToString("yyyy-MM-dd")',
+            editable: true,
+            eventResize: function (info) {
+                alert(info.event.title + " end is now " + info.event.start.toISOString());
+                fetch(`/api/Home/SaveEditedTool?id=${info.event.id}&start=${info.event.start.toISOString()}&end=${info.event.end.toISOString()}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                    })
+            },
+            //now: $nowDate,
+            locale: "da-DK",
+            nowIndicator: true,
+            aspectRatio: 1.2,
+            //height: 300,
+            navLinks: true,
+            displayEventTime: false,
+            scrollTime: '00:00',
+            firstDay: 1, //monday
+            weekNumbers: true,
+            header: {
+                left: 'today prev,next',
+                center: 'title',
+                right: 'timelinePeriod,resourceTimelineDay,resourceTimelineThisMonths,timeGridWeek'
+            },
+            //defaultView: 'resourceTimelineDay',
+            defaultView: 'resourceTimelineThisMonths',
+            views: {
+                resourceTimelineThisMonths: {
+                    type: 'resourceTimeline',
+                    duration: {
+                        days: @Model.DaysInMonth
+                    },
+                    buttonText: 'Month'
+                },
+                timelinePeriod: {
+                    type: "timeline",
+                    buttonText: "periode",
+                    slotLabelFormat: ["MMMM", "D", "dd"],
                 }
-                if ($('#txtStart').val().trim() == "") {
-                    alert('Start date required');
-                    return;
+            },
+            resourceAreaWidth: '15%',
+            resourceColumns: [{
+                    labelText: 'Tool',
+                    field: 'title'
+                },
+                {
+                    labelText: 'Status',
+                    field: 'status'
                 }
-                if ($('#chkIsFullDay').is(':checked') == false && $('#txtEnd').val().trim() == "") {
-                    alert('End date required');
-                    return;
-                }
-                else {
-                    var startDate = moment($('#txtStart').val(), "DD/MM/YYYY HH:mm A").toDate();
-                    var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm A").toDate();
-                    if (startDate > endDate) {
-                        alert('Invalid end date');
-                        return;
-                    }
-                }
-            
-                var data = {
-                    EventID: $('#hdEventID').val(),
-                    Subject: $('#txtSubject').val().trim(),
-                    Start: $('#txtStart').val().trim(),
-                    End: $('#chkIsFullDay').is(':checked') ? null : $('#txtEnd').val().trim(),
-                    Description: $('#txtDescription').val(),
-                    ThemeColor: $('#ddThemeColor').val(),
-                    IsFullDay: $('#chkIsFullDay').is(':checked')
-                }
-                SaveEvent(data);
-                // call function for submit data to the server 
-            })
+            ],
+            resources: @Html.Raw(Model.Resources),
+            events: @Html.Raw(Model.Bookings)
+        });
+        calendar.setOption('height', window.innerHeight - 100);
+
+        calendar.render();
+    });
+
+    $('#btnSave').click(function () {
+        //Validation/
+        if ($('#txtSubject').val().trim() == "") {
+            alert('Subject required');
+            return;
+        }
+        if ($('#txtStart').val().trim() == "") {
+            alert('Start date required');
+            return;
+        }
+        if ($('#chkIsFullDay').is(':checked') == false && $('#txtEnd').val().trim() == "") {
+            alert('End date required');
+            return;
+        } else {
+            var startDate = moment($('#txtStart').val(), "DD/MM/YYYY HH:mm A").toDate();
+            var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm A").toDate();
+            if (startDate > endDate) {
+                alert('Invalid end date');
+                return;
+            }
+        }
+
+        var data = {
+            EventID: $('#hdEventID').val(),
+            Subject: $('#txtSubject').val().trim(),
+            Start: $('#txtStart').val().trim(),
+            End: $('#chkIsFullDay').is(':checked') ? null : $('#txtEnd').val().trim(),
+            Description: $('#txtDescription').val(),
+            ThemeColor: $('#ddThemeColor').val(),
+            IsFullDay: $('#chkIsFullDay').is(':checked')
+        }
+        SaveEvent(data);
+        // call function for submit data to the server
+    })
 </script>
