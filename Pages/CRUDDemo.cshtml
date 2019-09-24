@@ -1,12 +1,12 @@
 ﻿@page
 @model CRUDDemoModel
 @{
-    ViewData["Title"] = "Home page";
+ViewData["Title"] = "Home page";
 }
 
 
 <link href="~/css/Calendar.css" rel="stylesheet" type="text/css" />
-<div class="col-4 offset-4 text-center" id="spinner" style="display:none">
+<div class="col-4 offset-4 text-center" id="spinner" style="display:none;">
     <div class="sp sp-3balls"></div>
 </div>
 <div id='crudcalendar' class="">
@@ -14,7 +14,7 @@
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -33,67 +33,7 @@
 </div>
 
 
-<div id="myModalSave" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Save Event</h4>
-            </div>
-            <div class="modal-body">
-                <form class="col-md-12 form-horizontal">
-                    <input type="hidden" id="hdEventID" value="0" />
-                    <div class="form-group">
-                        <label>Subject</label>
-                        <input type="text" id="txtSubject" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label>Start</label>
-                        <div class="input-group date" id="dtp1">
-                            <input type="text" id="txtStart" class="form-control" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" id="chkIsFullDay" checked="checked" /> Is Full Day
-                                event
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group" id="divEndDate" style="display:none">
-                        <label>End</label>
-                        <div class="input-group date" id="dtp2">
-                            <input type="text" id="txtEnd" class="form-control" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="txtDescription" rows="3" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Theme Color</label>
-                        <select id="ddThemeColor" class="form-control">
-                            <option value="">Default</option>
-                            <option value="red">Red</option>
-                            <option value="blue">Blue</option>
-                            <option value="black">Black</option>
-                            <option value="green">Green</option>
-                        </select>
-                    </div>
-                    <button type="button" id="btnSave" class="btn btn-success">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <script>
     // Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
@@ -106,30 +46,20 @@
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
             plugins: ['interaction', 'dayGrid', 'timeGrid', 'resourceTimeline'],
-
-            eventClick: function test(info) {
-                $('#myModalSave').modal();
-
-            },
-            eventDrop: function test(info) {
-                $('#exampleModalLabel').empty();
-                $('#exampleModalLabel').append(`DROPE`);
-
-
-                let buttons =
-                    `<div class="btn-group" role="group"><button class="btn btn-lg btn-outline-dark" onclick="GoToEdit('${info.event.id}')" >Edit</button><button class="btn btn-lg btn-outline-primary" onclick="GoToDetails('${info.event.id}')" >Details</button></div>`;
-                $('#modelBody').empty();
-                $('#modelBody').append(buttons);
-                $('#exampleModal').modal();
-
-            },
             now: '@DateTime.Now.ToString("yyyy-MM-dd")',
             editable: true,
             eventResize: function (info) {
                 document.getElementById("spinner").style.display = "block";
-                EditRequest(`/api/bookings/${info.event.id}`, { "startDate": info.event.start.toISOString(), "endDate": info.event.end.toISOString(), "Id": info.event.id }).then(x => console.log(x));
+                EditRequest(`/api/bookings/${info.event.id}`, {
+                    "startDate": info.event.start.toISOString(),
+                    "endDate": info.event.end.toISOString(),
+                    "Id": info.event.id
+                }).then(x => alert("Event Updated!"));
                 document.getElementById("spinner").style.display = "none";
 
+            },
+            eventClick: function (info) {
+                GetData(`/api/bookings/${info.event.id}`).then(response => ShowModel(response));
             },
             //now: $nowDate,
             locale: "da-DK",

@@ -238,6 +238,19 @@ function EditRequest(url, data) {
         headers: new Headers({
             'Content-Type': 'application/json'
         })
-    })
+    });
+}
+function GetData(url) {
+    return fetch(url)
         .then(response => response.json());
+}
+function ShowModel(data) {
+    let sdate = new Date(data.startDate);
+    let edate=new Date(data.endDate);
+    $('#exampleModalLabel').empty();
+    $('#exampleModalLabel').append(`From ${data.title} Details.`);
+    let TableOfDistances = `<table class="table table-bordered table-dark table-hover" style="width:100%;"><thead><tr><th>Property</th><th>Value</th></tr></thead><tr><td>Title</td><td>${data.title} </td></tr><tr><td>Start Date</td><td>${  sdate.getDate()+ '/' +(sdate.getMonth() + 1)  + '/' +  sdate.getFullYear()} </td></tr><tr><td>End Date</td><td>${edate.getDate() + '/' +(edate.getMonth() + 1) + '/' +   edate.getFullYear()}</td></tr><tr><td>Tool Id</td><td>${data.toolId}</td></tr></table>`;
+    $('#modelBody').empty();
+    $('#modelBody').append(TableOfDistances);
+    $('#exampleModal').modal();
 }

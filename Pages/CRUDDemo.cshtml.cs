@@ -40,7 +40,7 @@ namespace SmukToolsApp.Pages
                 else
                 {
                     obj.status = "On Going";
-                    obj.eventColor = "red";
+                    obj.eventColor = "#aa98ce";
                 }
                 listOfResource.Add(obj);
 

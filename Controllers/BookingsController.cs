@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +51,6 @@ namespace SmukToolsApp.Controllers
             {
                 return BadRequest();
             }
-
             var bookingToEdit = _context.Bookings.FirstOrDefault(x => x.Id == id);
             bookingToEdit.StartDate = booking.StartDate;
             bookingToEdit.EndDate = booking.EndDate;
