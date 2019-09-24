@@ -355,7 +355,6 @@ C:\Users\it\Desktop\SmukToolsProject\obj\Debug\netcoreapp2.2\Razor\Pages\Booking
 C:\Users\it\Desktop\SmukToolsProject\obj\Debug\netcoreapp2.2\Razor\Pages\Bookings\Edit.g.cshtml.cs
 C:\Users\it\Desktop\SmukToolsProject\obj\Debug\netcoreapp2.2\Razor\Pages\Bookings\Index.g.cshtml.cs
 C:\Users\it\Desktop\SmukToolsProject\obj\Debug\netcoreapp2.2\Razor\Pages\CRUDDemo.g.cshtml.cs
-C:\Users\it\Desktop\SmukToolsProject\obj\Debug\netcoreapp2.2\Razor\Pages\EditBooking.g.cshtml.cs
 C:\Users\it\Desktop\SmukToolsProject\obj\Debug\netcoreapp2.2\Razor\Pages\Error.g.cshtml.cs
 C:\Users\it\Desktop\SmukToolsProject\obj\Debug\netcoreapp2.2\Razor\Pages\EventCalender.g.cshtml.cs
 C:\Users\it\Desktop\SmukToolsProject\obj\Debug\netcoreapp2.2\Razor\Pages\Index.g.cshtml.cs

@@ -1,17 +1,20 @@
 ﻿@page
 @model CRUDDemoModel
 @{
-ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home page";
 }
 
 
 <link href="~/css/Calendar.css" rel="stylesheet" type="text/css" />
+<div class="col-4 offset-4 text-center" id="spinner" style="display:none">
+    <div class="sp sp-3balls"></div>
+</div>
 <div id='crudcalendar' class="">
 
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -55,8 +58,10 @@ ViewData["Title"] = "Home page";
                     </div>
                     <div class="form-group">
                         <div class="checkbox">
-                            <label><input type="checkbox" id="chkIsFullDay" checked="checked" /> Is Full Day
-                                event</label>
+                            <label>
+                                <input type="checkbox" id="chkIsFullDay" checked="checked" /> Is Full Day
+                                event
+                            </label>
                         </div>
                     </div>
                     <div class="form-group" id="divEndDate" style="display:none">
@@ -121,12 +126,10 @@ ViewData["Title"] = "Home page";
             now: '@DateTime.Now.ToString("yyyy-MM-dd")',
             editable: true,
             eventResize: function (info) {
-                alert(info.event.title + " end is now " + info.event.start.toISOString());
-                fetch(`/api/Home/SaveEditedTool?id=${info.event.id}&start=${info.event.start.toISOString()}&end=${info.event.end.toISOString()}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data)
-                    })
+                document.getElementById("spinner").style.display = "block";
+                EditRequest(`/api/bookings/${info.event.id}`, { "startDate": info.event.start.toISOString(), "endDate": info.event.end.toISOString(), "Id": info.event.id }).then(x => console.log(x));
+                document.getElementById("spinner").style.display = "none";
+
             },
             //now: $nowDate,
             locale: "da-DK",
