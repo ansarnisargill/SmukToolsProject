@@ -270,4 +270,5 @@ function ShowResourceModal(data) {
     $('#modelBody').empty();
     $('#modelBody').append(TableOfDistances);
     $('#exampleModal').modal();
+    
 }
