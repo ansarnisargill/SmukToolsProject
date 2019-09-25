@@ -43,8 +43,8 @@ ViewData["Title"] = "Home page";
 
     document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('crudcalendar');
-
         var calendar = new FullCalendar.Calendar(calendarEl, {
+            schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
             plugins: ['interaction', 'dayGrid', 'timeGrid', 'resourceTimeline'],
             now: '@DateTime.Now.ToString("yyyy-MM-dd")',
             editable: true,
@@ -61,8 +61,20 @@ ViewData["Title"] = "Home page";
             eventClick: function (info) {
                 GetData(`/api/bookings/${info.event.id}`).then(response => ShowModel(response));
             },
+            eventDrop: function (info) {
+                if (info.newResource) {
+                    EditRequest(`/api/bookings/${info.event.id}`, {
+                        "startDate": info.event.start.toISOString(),
+                        "endDate": info.event.end.toISOString(),
+                        "Id": info.event.id,
+                        "ToolId": info.newResource.id
+                    }).then(x => alert("Event Updated!"));
+
+                }
+
+            },
             //now: $nowDate,
-            locale: "da-DK",
+            locale: "us-US",
             nowIndicator: true,
             aspectRatio: 1.2,
             //height: 300,
@@ -108,40 +120,6 @@ ViewData["Title"] = "Home page";
         calendar.setOption('height', window.innerHeight - 100);
 
         calendar.render();
+        bindClickEventToAllResources();
     });
-
-    $('#btnSave').click(function () {
-        //Validation/
-        if ($('#txtSubject').val().trim() == "") {
-            alert('Subject required');
-            return;
-        }
-        if ($('#txtStart').val().trim() == "") {
-            alert('Start date required');
-            return;
-        }
-        if ($('#chkIsFullDay').is(':checked') == false && $('#txtEnd').val().trim() == "") {
-            alert('End date required');
-            return;
-        } else {
-            var startDate = moment($('#txtStart').val(), "DD/MM/YYYY HH:mm A").toDate();
-            var endDate = moment($('#txtEnd').val(), "DD/MM/YYYY HH:mm A").toDate();
-            if (startDate > endDate) {
-                alert('Invalid end date');
-                return;
-            }
-        }
-
-        var data = {
-            EventID: $('#hdEventID').val(),
-            Subject: $('#txtSubject').val().trim(),
-            Start: $('#txtStart').val().trim(),
-            End: $('#chkIsFullDay').is(':checked') ? null : $('#txtEnd').val().trim(),
-            Description: $('#txtDescription').val(),
-            ThemeColor: $('#ddThemeColor').val(),
-            IsFullDay: $('#chkIsFullDay').is(':checked')
-        }
-        SaveEvent(data);
-        // call function for submit data to the server
-    })
 </script>

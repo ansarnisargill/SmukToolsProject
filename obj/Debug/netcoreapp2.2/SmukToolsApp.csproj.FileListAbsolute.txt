@@ -6,7 +6,6 @@ C:\Users\it\Desktop\SmukToolsProject\bin\Debug\netcoreapp2.2\SmukToolsApp.pdb
 C:\Users\it\Desktop\SmukToolsProject\bin\Debug\netcoreapp2.2\SmukToolsApp.Views.dll
 C:\Users\it\Desktop\SmukToolsProject\bin\Debug\netcoreapp2.2\SmukToolsApp.Views.pdb
 C:\Users\it\Desktop\SmukToolsProject\obj\Debug\netcoreapp2.2\SmukToolsApp.csprojAssemblyReference.cache
-C:\Users\it\Desktop\SmukToolsProject\obj\Debug\netcoreapp2.2\SmukToolsApp.csproj.CoreCompileInputs.cache
 C:\Users\it\Desktop\SmukToolsProject\obj\Debug\netcoreapp2.2\SmukToolsApp.RazorAssemblyInfo.cache
 C:\Users\it\Desktop\SmukToolsProject\obj\Debug\netcoreapp2.2\SmukToolsApp.RazorAssemblyInfo.cs
 C:\Users\it\Desktop\SmukToolsProject\obj\Debug\netcoreapp2.2\SmukToolsApp.AssemblyInfoInputs.cache

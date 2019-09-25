@@ -246,10 +246,27 @@ function GetData(url) {
 }
 function ShowModel(data) {
     let sdate = new Date(data.startDate);
-    let edate=new Date(data.endDate);
+    let edate = new Date(data.endDate);
     $('#exampleModalLabel').empty();
-    $('#exampleModalLabel').append(`From ${data.title} Details.`);
-    let TableOfDistances = `<table class="table table-bordered table-dark table-hover" style="width:100%;"><thead><tr><th>Property</th><th>Value</th></tr></thead><tr><td>Title</td><td>${data.title} </td></tr><tr><td>Start Date</td><td>${  sdate.getDate()+ '/' +(sdate.getMonth() + 1)  + '/' +  sdate.getFullYear()} </td></tr><tr><td>End Date</td><td>${edate.getDate() + '/' +(edate.getMonth() + 1) + '/' +   edate.getFullYear()}</td></tr><tr><td>Tool Id</td><td>${data.toolId}</td></tr></table>`;
+    $('#exampleModalLabel').append(`${data.title} Details.`);
+    let TableOfDistances = `<table class="table table-bordered table-dark table-hover" style="width:100%;"><thead><tr><th>Property</th><th>Value</th></tr></thead><tr><td>Title</td><td>${data.title} </td></tr><tr><td>Start Date</td><td>${sdate.getDate() + '/' + (sdate.getMonth() + 1) + '/' + sdate.getFullYear()} </td></tr><tr><td>End Date</td><td>${edate.getDate() + '/' + (edate.getMonth() + 1) + '/' + edate.getFullYear()}</td></tr><tr><td>Tool Id</td><td>${data.toolId}</td></tr></table>`;
+    $('#modelBody').empty();
+    $('#modelBody').append(TableOfDistances);
+    $('#exampleModal').modal();
+}
+function bindClickEventToAllResources() {
+    document.body.addEventListener("click", function (e) {
+        if (e.target &&
+            e.target.classList.contains("fc-cell-text")) {
+            GetData(`/api/tools/${e.srcElement.innerText}`).then(response => ShowResourceModal(response));
+        }
+    });
+}
+function ShowResourceModal(data) {
+    console.log(data);
+    $('#exampleModalLabel').empty();
+    $('#exampleModalLabel').append(`${data.title} Details.`);
+    let TableOfDistances = `<table class="table table-bordered table-dark table-hover" style="width:100%;"><thead><tr><th>Property</th><th>Value</th></tr></thead><tr><td>Title</td><td>${data.title} </td></tr><tr><td>Is Complete</td><td>${data.isComplete} </td></tr></table>`;
     $('#modelBody').empty();
     $('#modelBody').append(TableOfDistances);
     $('#exampleModal').modal();

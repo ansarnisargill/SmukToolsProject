@@ -13,11 +13,11 @@ namespace SmukToolsApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookingsController : ControllerBase
+    public class ToolsController : ControllerBase
     {
         private readonly ToolContext _context;
 
-        public BookingsController(ToolContext context)
+        public ToolsController(ToolContext context)
         {
             _context = context;
         }
@@ -31,16 +31,15 @@ namespace SmukToolsApp.Controllers
 
         // GET: api/Bookings/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Booking>> GetBooking(int id)
+        public async Task<ActionResult<Tool>> GetBooking(string id)
         {
-            var booking = await _context.Bookings.FindAsync(id);
-
-            if (booking == null)
+            var tool = _context.Tools.Where(x=>x.Title.ToUpper()==id.ToUpper()).FirstOrDefault();
+            if (tool == null)
             {
                 return NotFound();
             }
 
-            return booking;
+            return tool;
         }
 
         // PUT: api/Bookings/5

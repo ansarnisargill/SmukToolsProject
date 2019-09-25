@@ -31,7 +31,7 @@ namespace SmukToolsApp.Pages
             {
                 var obj = new Resources();
                 obj.id = item.Id;
-                obj.title = item.Title;
+                obj.title =item.Title;
                 if (item.isComplete)
                 {
                     obj.status = "Completed";
